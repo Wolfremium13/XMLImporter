@@ -28,9 +28,9 @@ public class BatchXMLImporterShould {
     }
 
     @Test
-    public void print_all_data() {
+    public void print_all_staff_ids_and_contains_one() {
         new BatchXMLImporter().importXMLintoDatabase(path);
-        assertThat(systemOutContent.toString().contains("1004")).isTrue();
+        assertThat(systemOutContent.toString().contains("1002")).isTrue();
     }
 
 

@@ -20,6 +20,8 @@ public class BatchXMLImporterShould {
         originalSystemOut = System.out;
         systemOutContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(systemOutContent));
+        PostgresConnection connection = new PostgresConnection();
+        connection.clearTables();
     }
 
     @AfterEach

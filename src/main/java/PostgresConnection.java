@@ -5,6 +5,7 @@ import java.sql.*;
 
 public class PostgresConnection {
 
+
     public void insertCompany(Company company) {
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:postgresql://127.0.0.1:5432/postgres", "postgres", "postgres")) {
@@ -23,6 +24,22 @@ public class PostgresConnection {
             e.printStackTrace();
         }
     }
+
+    public void clearTables() {
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:postgresql://127.0.0.1:5432/postgres", "postgres", "postgres")) {
+            try (PreparedStatement preparedStatement = conn.prepareStatement(
+                    "DELETE FROM salary; DELETE FROM staff; DELETE FROM company")) {
+                preparedStatement.executeUpdate();
+            }
+
+        } catch (SQLException e) {
+            System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void insertSalary(Connection conn, Staff staff) throws SQLException {
         try (PreparedStatement preparedStatement = conn.prepareStatement(

@@ -1,7 +1,7 @@
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
-import xml.models.Company;
+import models.Company;
 
 import java.io.File;
 import java.io.IOException;

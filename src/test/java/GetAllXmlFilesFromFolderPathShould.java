@@ -7,7 +7,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class GetAllXMLFilesFromFolderPathShould {
+public class GetAllXmlFilesFromFolderPathShould {
     final String path = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources";
 
     @Test

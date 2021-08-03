@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class BatchXMLImporterShould {
 
     final String path = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources";
-
+    private final PostgresConnection connection = new PostgresConnection();
     private PrintStream originalSystemOut;
     private ByteArrayOutputStream systemOutContent;
 
@@ -20,8 +20,7 @@ public class BatchXMLImporterShould {
         originalSystemOut = System.out;
         systemOutContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(systemOutContent));
-        PostgresConnection connection = new PostgresConnection();
-        connection.clearTables();
+
     }
 
     @AfterEach
@@ -37,8 +36,14 @@ public class BatchXMLImporterShould {
 
     @Test
     public void insert_companies_from_xml_files() {
+        connection.clearTables();
         new BatchXMLImporter().importXMLintoDatabase(path);
         assertThat(systemOutContent.toString().contains("ok")).isTrue();
     }
 
+    @Test
+    public void get_companies_from_database() {
+        var companies = connection.getAllCompanies();
+        assertThat(companies).isNotEmpty();
+    }
 }

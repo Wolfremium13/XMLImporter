@@ -1,7 +1,10 @@
 import models.Company;
+import models.Salary;
 import models.Staff;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PostgresConnection {
 
@@ -37,6 +40,59 @@ public class PostgresConnection {
             System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public List<Company> getAllCompanies() {
+        ArrayList<Company> companies = new ArrayList<>();
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:postgresql://127.0.0.1:5432/postgres", "postgres", "postgres")) {
+            getCompanies(companies, conn);
+            getStaff(companies, conn);
+            getSalary(companies, conn);
+        } catch (SQLException e) {
+            System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return companies;
+    }
+
+    private void getSalary(ArrayList<Company> companies, Connection conn) throws SQLException {
+        for (Company company : companies) {
+            for (Staff staff : company.staff) {
+                var resultSet = conn.createStatement().executeQuery("SELECT * FROM salary WHERE staff_id = " + staff.id);
+                while (resultSet.next()) {
+                    var salary = new Salary();
+                    salary.currency = resultSet.getString("currency");
+                    salary.value = resultSet.getInt("value");
+                    staff.salary = salary;
+                }
+            }
+        }
+    }
+
+    private void getStaff(ArrayList<Company> companies, Connection conn) throws SQLException {
+        for (Company company : companies) {
+            var resultSet = conn.createStatement().executeQuery("SELECT * FROM staff WHERE company_id = " + company.id);
+            while (resultSet.next()) {
+                var staff = new Staff();
+                staff.id = resultSet.getInt("id");
+                staff.firstname = resultSet.getString("first_name");
+                staff.lastname = resultSet.getString("last_name");
+                staff.nickname = resultSet.getString("nick_name");
+                company.staff.add(staff);
+            }
+        }
+    }
+
+    private void getCompanies(ArrayList<Company> companies, Connection conn) throws SQLException {
+        var resultSet = conn.createStatement().executeQuery("SELECT * FROM company");
+        while (resultSet.next()) {
+            var company = new Company();
+            company.id = resultSet.getInt("id");
+            company.name = resultSet.getString("name");
+            companies.add(company);
         }
     }
 

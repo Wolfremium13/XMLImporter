@@ -33,5 +33,10 @@ public class BatchXMLImporterShould {
         assertThat(systemOutContent.toString().contains("1002")).isTrue();
     }
 
+    @Test
+    public void insert_companies_from_xml_files() {
+        new BatchXMLImporter().importXMLintoDatabase(path);
+        assertThat(systemOutContent.toString().contains("ok")).isTrue();
+    }
 
 }

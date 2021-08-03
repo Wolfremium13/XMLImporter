@@ -9,7 +9,7 @@ import java.io.Serializable;
 @XmlRootElement
 public class Staff implements Serializable {
     @XmlAttribute
-    public String id;
+    public Integer id;
     @XmlElement
     public String firstname;
     @XmlElement

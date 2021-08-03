@@ -9,7 +9,7 @@ public class Salary {
     @XmlAttribute
     public String currency;
     @XmlValue
-    public int text;
+    public int value;
 
     public Salary() {
         super();

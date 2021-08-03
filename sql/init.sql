@@ -1,23 +1,22 @@
--- Creation of product table
 CREATE TABLE IF NOT EXISTS company
 (
-    id SERIAL PRIMARY KEY
+    id   SERIAL PRIMARY KEY,
+    name varchar UNIQUE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS staff
 (
-    id         SERIAL PRIMARY KEY,
-    company_id INT     NOT NULL,
-    first_name varchar NOT NULL,
-    last_name  varchar NOT NULL,
-    nick_name  varchar NOT NULL,
-    salary     INT     NOT NULL,
+    id         INT PRIMARY KEY,
+    company_id INT            NOT NULL,
+    first_name varchar        NOT NULL,
+    last_name  varchar        NOT NULL,
+    nick_name  varchar UNIQUE NOT NULL,
     CONSTRAINT fk_company_id
         FOREIGN KEY (company_id)
             REFERENCES company (id)
 );
 
-CREATE TABLE IF NOT EXISTS city
+CREATE TABLE IF NOT EXISTS salary
 (
     id       SERIAL PRIMARY KEY,
     staff_id INT     NOT NULL,

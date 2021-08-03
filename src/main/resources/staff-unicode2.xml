@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<company>
+<company name="test2">
     <staff id="1002">
         <firstname>揚2</firstname>
         <lastname>木金2</lastname>

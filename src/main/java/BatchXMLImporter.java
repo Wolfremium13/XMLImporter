@@ -15,8 +15,9 @@ public class BatchXMLImporter {
     public void importXMLintoDatabase(String folderPath) {
         List<Path> paths = getAllXMLFilesFromFolderPath(folderPath);
         List<Company> companies = getCompanies(paths);
-        companies.forEach(company -> company.staff.forEach(staff -> System.out.println(staff.id)));
-        //TODO insert in database
+        PostgresConnection connection = new PostgresConnection();
+        companies.forEach(connection::insertCompany);
+        System.out.println("ok");
     }
 
     private List<Company> getCompanies(List<Path> paths) {

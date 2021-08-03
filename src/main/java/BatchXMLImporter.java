@@ -6,23 +6,30 @@ import xmlmodels.Company;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BatchXmlImporter {
 
-    private final PostgresDao dao;
+    private final Dao dao;
     private final FileFinder finder;
 
-    BatchXmlImporter(PostgresDao dao, FileFinder finder) {
+    BatchXmlImporter(Dao dao, FileFinder finder) {
         this.dao = dao;
         this.finder = finder;
     }
 
 
-    public void importFiles(String folderPath) throws IOException, JAXBException {
-        List<Company> companies = getCompanies(finder.getAllXMLPathsFrom(folderPath));
-        companies.forEach(dao::insertCompany);
+    public void importFiles(String folderPath) throws IOException, JAXBException, SQLException {
+        List<Company> companies = getCompanies(finder.findAllXmlPathsIn(folderPath));
+        insertIntoDatabase(companies);
+    }
+
+    private void insertIntoDatabase(List<Company> companies) throws SQLException {
+        for (Company company : companies) {
+            dao.insertCompany(company);
+        }
     }
 
     private List<Company> getCompanies(List<Path> paths) throws JAXBException {

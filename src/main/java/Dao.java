@@ -6,29 +6,20 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostgresDao {
+public class Dao {
 
-
-    public void insertCompany(Company company) {
+    public void insertCompany(Company company) throws SQLException {
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:postgresql://127.0.0.1:5432/postgres", "postgres", "postgres")) {
             final int companyId = getResultSetFromCompany(company, conn);
             for (Staff staff : company.staff) {
-                try {
-                    insertStaff(conn, companyId, staff);
-                    insertSalary(conn, staff);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                insertStaff(conn, companyId, staff);
+                insertSalary(conn, staff);
             }
-        } catch (SQLException e) {
-            System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
-    public void clearTables() {
+    public void clearTables() throws SQLException {
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:postgresql://127.0.0.1:5432/postgres", "postgres", "postgres")) {
             try (PreparedStatement preparedStatement = conn.prepareStatement(
@@ -36,24 +27,16 @@ public class PostgresDao {
                 preparedStatement.executeUpdate();
             }
 
-        } catch (SQLException e) {
-            System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
-    public List<Company> getAllCompanies() {
+    public List<Company> getAllCompanies() throws SQLException {
         ArrayList<Company> companies = new ArrayList<>();
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:postgresql://127.0.0.1:5432/postgres", "postgres", "postgres")) {
             getCompanies(companies, conn);
             getStaff(companies, conn);
             getSalary(companies, conn);
-        } catch (SQLException e) {
-            System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         return companies;
     }

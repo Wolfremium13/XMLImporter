@@ -1,12 +1,12 @@
-import models.Company;
-import models.Salary;
-import models.Staff;
+import xmlmodels.Company;
+import xmlmodels.Salary;
+import xmlmodels.Staff;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostgresConnection {
+public class PostgresDao {
 
 
     public void insertCompany(Company company) {

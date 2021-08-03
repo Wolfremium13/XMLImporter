@@ -1,4 +1,4 @@
-package models;
+package xmlmodels;
 
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
@@ -18,8 +18,4 @@ public class Staff implements Serializable {
     public String nickname;
     @XmlElement
     public Salary salary;
-
-    public Staff() {
-        super();
-    }
 }

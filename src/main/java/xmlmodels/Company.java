@@ -1,4 +1,4 @@
-package models;
+package xmlmodels;
 
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
@@ -16,8 +16,4 @@ public class Company {
 
     @XmlElement
     public List<Staff> staff = new ArrayList<>();
-
-    public Company() {
-        super();
-    }
 }

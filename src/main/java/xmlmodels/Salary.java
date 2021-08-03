@@ -1,4 +1,4 @@
-package models;
+package xmlmodels;
 
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlRootElement;
@@ -10,8 +10,4 @@ public class Salary {
     public String currency;
     @XmlValue
     public int value;
-
-    public Salary() {
-        super();
-    }
 }

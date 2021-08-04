@@ -21,7 +21,7 @@ public class BatchXmlImporter {
     }
 
 
-    public void importFiles(String folderPath) throws IOException, JAXBException, SQLException {
+    public void importFilesFrom(String folderPath) throws IOException, JAXBException, SQLException {
         List<Company> companies = getCompanies(finder.findAllXmlPathsIn(folderPath));
         insertIntoDatabase(companies);
     }

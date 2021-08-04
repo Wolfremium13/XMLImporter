@@ -18,7 +18,7 @@ class BatchXmlImporterShould {
         BatchXmlImporter batchXmlImporter = new BatchXmlImporter(dao, finder);
         dao.clearTables();
 
-        batchXmlImporter.importFiles(path);
+        batchXmlImporter.importFilesFrom(path);
 
         var companies = dao.getAllCompanies();
         assertThat(companies).hasSize(2);
